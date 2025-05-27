@@ -36,10 +36,10 @@ def process_messages(messages):
 
 
 
-def run_one_consumer(redis_client):
+def run_one_consumer(redis_client, stop_event):
     logger.info(f"Starting consumer: {CONSUMER_NAME}")
     ensure_consumer_group(redis_client)
-    while True:
+    while not stop_event.is_set():
         try:
             messages = redis_client.xreadgroup(
                 groupname=GROUP_NAME,
@@ -61,3 +61,5 @@ def run_one_consumer(redis_client):
         except redis.exceptions.RedisError as err:
             logger.error(f"Redis error: {err}")
             time.sleep(5)
+
+    logger.info(f"Consumer {CONSUMER_NAME} stopped.")

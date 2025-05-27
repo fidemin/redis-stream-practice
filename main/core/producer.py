@@ -1,5 +1,4 @@
 import logging
-import uuid
 
 import json
 from datetime import datetime
