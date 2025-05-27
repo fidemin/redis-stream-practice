@@ -1,4 +1,5 @@
 import logging
+import random
 
 import redis
 
@@ -13,7 +14,6 @@ logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
     # Example usage
-    user_id = "user123"
     action = "create"
     resource = "document"
     metadata = {"details": "Sample metadata"}
@@ -21,4 +21,9 @@ if __name__ == "__main__":
     # Assuming the write_audit_log function is defined in the same file
     from main.core.producer import write_audit_log
 
-    write_audit_log(redis_client, user_id, action, resource, metadata)
+    num_of_messages = random.randint(10, 20)
+    for i in range(num_of_messages):
+        user_id = f"user_{random.randint(1, 100)}"
+        write_audit_log(redis_client, user_id, action, resource, metadata)
+
+    logging.info(f"Produced {num_of_messages} messages to the stream.")

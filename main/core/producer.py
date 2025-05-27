@@ -4,7 +4,8 @@ import uuid
 import json
 from datetime import datetime
 
-STREAM_NAME = "audit_log_stream"
+from main.core.constants import STREAM_NAME
+
 MAX_STREAM_LENGTH = 100000
 
 logger = logging.getLogger(__name__)
